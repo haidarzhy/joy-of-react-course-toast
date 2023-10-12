@@ -16,10 +16,17 @@ function ToastPlayground() {
     setIsToastVisible(false);
   }
 
+  function removeToast(id) {
+    const newToasts = toasts.filter((toast) => toast.id !== id);
+    setToasts(newToasts);
+  }
+
   function createToast(e) {
     e.preventDefault();
     setIsToastVisible(true);
     setToasts([...toasts, { message, variant, id: Math.random() }]);
+    setMessage("");
+    setVariant(VARIANT_OPTIONS[0]);
   }
   return (
     <div className={styles.wrapper}>
@@ -36,7 +43,7 @@ function ToastPlayground() {
         />
       )}
 
-      <ToastShelf toasts={toasts} />
+      <ToastShelf toasts={toasts} removeToast={removeToast} />
 
       <form onSubmit={createToast} className={styles.controlsWrapper}>
         <div className={styles.row}>
