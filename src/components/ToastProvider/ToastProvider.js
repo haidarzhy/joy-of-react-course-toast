@@ -1,4 +1,5 @@
 import React from "react";
+import useEscape from "../../hooks/useEscape";
 
 export const ToastContext = React.createContext();
 function ToastProvider({ children }) {
@@ -8,16 +9,8 @@ function ToastProvider({ children }) {
     setToasts(newToasts);
   }
 
-  React.useEffect(() => {
-    function handleKeyDown(e) {
-      if (e.key === "Escape") {
-        setToasts([]);
-      }
-    }
-    window.addEventListener("keydown", handleKeyDown);
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
+  useEscape(() => {
+    setToasts([]);
   });
 
   function createToast(toast) {
