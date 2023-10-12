@@ -10,6 +10,7 @@ function ToastPlayground() {
   const [message, setMessage] = React.useState("");
   const [variant, setVariant] = React.useState(VARIANT_OPTIONS[0]);
   const [isToastVisible, setIsToastVisible] = React.useState(false);
+  const [toasts, setToasts] = React.useState([]);
 
   function dismissPlaygroundToast() {
     setIsToastVisible(false);
@@ -18,6 +19,7 @@ function ToastPlayground() {
   function createToast(e) {
     e.preventDefault();
     setIsToastVisible(true);
+    setToasts([...toasts, { message, variant, id: Math.random() }]);
   }
   return (
     <div className={styles.wrapper}>
@@ -34,7 +36,7 @@ function ToastPlayground() {
         />
       )}
 
-      <ToastShelf />
+      <ToastShelf toasts={toasts} />
 
       <form onSubmit={createToast} className={styles.controlsWrapper}>
         <div className={styles.row}>
